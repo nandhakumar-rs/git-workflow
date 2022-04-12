@@ -1,0 +1,24 @@
+# Using a public action written in js for learning purpose
+#
+# Name of the workflow
+name: using a existing action with the workflow # can be any name
+
+# On which action the workflow to be triggered
+on: [push]
+
+# Jobs
+jobs: 
+    run-shell-command:
+      # Using Ubuntu OS
+      runs-on: ubuntu-latest
+      steps:
+        # First step of the job
+        - name: JS Action
+          # ID to refer in the future steps
+          id: js-action
+          uses: actions/hello-world-javascript-action@v1
+          with:
+            # Props to be passed to the action
+            who-to-greet: Nandhu
+        - name: Print output of the previous step
+          run: echo "${{steps.js-action.outputs.time}}"

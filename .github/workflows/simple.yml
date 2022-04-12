@@ -1,18 +1,19 @@
-name: practice workflow
+name: practice workflow # can be any name
 
-on: [push]
+on: [push] # on push action the workflow will be triggered
 
 jobs: 
     run-shell-command:
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-latest # os to be used
       steps:
         - name: Print Hello World
           run: echo "Hello World"
-    run-windows-comand:
+    run-windows-command:
       runs-on: windows-latest
-      steps:
-        - name: List all the directories
+      needs: ["run-shell-command"] # wait util run-shell command completes it's job
+      steps: # array of step to be done
+        - name: List all the directories # can be any name (acts as an id)
           run: dir
         - name: Print text from python
           run: print("printing a python command")
-          shell: python
+          shell: python # referring which shell to be used

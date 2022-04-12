@@ -1,0 +1,31 @@
+# Cloning the repo into the git runner(virtual machine)
+#
+# Name of the workflow
+name: clone this repo into runner # can be any name
+
+# On which action the workflow to be triggered
+on: [push]
+
+# Jobs
+jobs: 
+    run-shell-command:
+      # Using Ubuntu OS
+      runs-on: ubuntu-latest
+      steps:
+        # First step of the job
+        - name: Checkout Action
+          uses: actions/checkout@v1 # This is a public action repo. When this action is used current repo will be cloned into the runner.
+        - name: Listing the repo files 
+          run: | # | help to write multi line command
+            pwd
+            ls -a
+        - name: Git ENV Variables
+          # GITHUB_SHA - Hash of the last commit with the current repo
+          # GITHUB_REPOSITORY - Current repo url
+          # GITHUB_WORKSPACE - Current workspace
+          # github.token - Your git auth token
+          run: |
+            echo $GITHUB_SHA
+            echo $GITHUB_REPOSITORY
+            echo $GITHUB_WORKSPACE
+            echo "${{github.token}}"

@@ -1,19 +1,36 @@
-name: practice workflow # can be any name
+#Basic Git Workflow
+#
+# Name of the workflow
+name: practice workflow
 
-on: [push] # on push action the workflow will be triggered
+# On which action the workflow to be triggered
+on: [push]
 
+# Jobs
 jobs: 
+    # Job 1
     run-shell-command:
-      runs-on: ubuntu-latest # os to be used
+      # Using Ubuntu OS
+      runs-on: ubuntu-latest
+      # Array of steps to be done
       steps:
+        # First step of the job
         - name: Print Hello World
           run: echo "Hello World"
+    # Job 2
     run-windows-command:
+      # Using Windows OS
       runs-on: windows-latest
-      needs: ["run-shell-command"] # wait util run-shell command completes it's job
-      steps: # array of step to be done
-        - name: List all the directories # can be any name (acts as an id)
+      # To wait until any of the job to be completed before starting this job use 'needs' and pass the name of the job
+      needs: ["run-shell-command"]
+      # Array of steps to be done
+      steps:
+        - name: List all the directories
           run: dir
         - name: Print text from python
           run: print("printing a python command")
-          shell: python # referring which shell to be used
+          # Type of shell to be used, It can be base, powershell and other shell type compatible with the using OS
+          shell: python
+
+
+

@@ -1,0 +1,36 @@
+# Scheduling the workflow to run every 5 mins
+#
+# Name of the workflow
+name: scheduled workflow # can be any name
+
+# On which action the workflow to be triggered
+on:
+  schedule:
+    - cron: 0/5 * * * * # This will run the workflow for every 5 mins and the minimum time should be 5 mins, less than 5 mins are not allowed
+   # - cron: 0/6 * * * * # You can have multiple cron jobs to run 
+
+# Jobs
+jobs: 
+    run-shell-command:
+      # Using Ubuntu OS
+      runs-on: ubuntu-latest
+      steps:
+        # First step of the job
+        - name: Checkout Action
+          # This is a public action repo. When this action is used current repo will be cloned into the runner.
+          uses: actions/checkout@v1 #For more public actions checkout  https://github.com/marketplace?type=actions
+        - name: Listing the repo files
+          run: | # | help to write multi line command
+            pwd
+            echo "This is a scheduler"
+        - name: Git ENV Variables
+          # GITHUB_SHA - Hash of the last commit with the current repo
+          # GITHUB_REPOSITORY - Current repo url
+          # GITHUB_WORKSPACE - Runner Working Path
+          # github.token - Your git auth token
+          # and more ... Check Docs
+          run: |
+            echo $GITHUB_SHA
+            echo $GITHUB_REPOSITORY
+            echo $GITHUB_WORKSPACE
+            echo "${{github.token}}"

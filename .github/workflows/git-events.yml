@@ -1,0 +1,38 @@
+# Triggering the workflow on particular git event
+#
+# Name of the workflow
+name: triggering event on pull request with specific events # can be any name
+
+# On which action the workflow to be triggered
+on:
+  pull_request:
+    types:
+      - opened   # When a new pull request has been created
+      - assigned # When the pull request has been assigned to someone
+      # There are many other types that can be mentioned for different git events like push, pull etc.
+
+# Jobs
+jobs: 
+    run-shell-command:
+      # Using Ubuntu OS
+      runs-on: ubuntu-latest
+      steps:
+        # First step of the job
+        - name: Checkout Action
+          # This is a public action repo. When this action is used current repo will be cloned into the runner.
+          uses: actions/checkout@v1 #For more public actions checkout  https://github.com/marketplace?type=actions
+        - name: Listing the repo files
+          run: | # | help to write multi line command
+            pwd
+            ls -a 
+        - name: Git ENV Variables
+          # GITHUB_SHA - Hash of the last commit with the current repo
+          # GITHUB_REPOSITORY - Current repo url
+          # GITHUB_WORKSPACE - Runner Working Path
+          # github.token - Your git auth token
+          # and more ... Check Docs
+          run: |
+            echo $GITHUB_SHA
+            echo $GITHUB_REPOSITORY
+            echo $GITHUB_WORKSPACE
+            echo "${{github.token}}"

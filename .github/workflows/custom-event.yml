@@ -19,4 +19,5 @@ jobs:
           # github object will have all the payload that has been sent from the external trigger
           run: |
             echo "*** External Payload ***"
-            echo "${{github.event.workflow_name}}"
+            echo ${{github.event.client_payload.workflow_name}}
+

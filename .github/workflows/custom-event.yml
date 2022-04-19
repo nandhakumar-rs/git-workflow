@@ -21,3 +21,11 @@ jobs:
             echo "*** External Payload ***"
             echo ${{github.event.client_payload.workflow_name}}
 
+
+
+# Docs Ref https://docs.github.com/en/rest/reference/repos#create-a-repository-dispatch-event--code-samples
+# API used to trigger the workflow 
+# POST https://api.github.com/repos/nandhakumar-rs/git-workflow/dispatches
+# Headers { "Accept": "application/vnd.github.v3+json", "Content-Type" : "application/json"  }
+# Authorization  {username: "", password: github auth token }
+# Body { event_type: "event type that has been mentioned on the workflow" , client_payload: { #any payload items }}

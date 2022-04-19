@@ -10,8 +10,11 @@ on:
     # Specifying the branch, where this workflow will be executed only when the push events happened on the specified branches
     branches:
       - master
-      - "feature/*" # Anything that starts with feature/
-      - "feature/**" # Anything that starts with feature/ and has multi-level eg: feature/c1/b2
+      # Anything that starts with feature/
+      - "feature/*"
+      # Anything that starts with feature/ and has multi-level eg: feature/c1/b2. 
+      #Pattern Ref: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+      - "feature/**" 
       - "!feature/c1" # To ignore the branch feature/c1
     tags:
       - "v1.*" # Any Tags that starts with v1.

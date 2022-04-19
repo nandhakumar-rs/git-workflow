@@ -1,0 +1,53 @@
+# Adding filter on events to run the workflow on specific scenario
+#
+# Name of the workflow
+name: Filtering before running the workflow # can be any name
+
+# On which action the workflow to be triggered
+on:
+  # Note: Either ignore or accept can be specified to the git events
+  push:
+    # Specifying the branch, where this workflow will be executed only when the push events happened on the specified branches
+    branches:
+      - master
+      - "feature/*" # Anything that starts with feature/
+      - "feature/**" # Anything that starts with feature/ and has multi-level eg: feature/c1/b2
+      - "!feature/c1" # To ignore the branch feature/c1
+    tags:
+      - "v1.*" # Any Tags that starts with v1.
+    paths:
+      - "**.yml" # Any files that are only yml
+  pull_request:
+    # Specifying the branch, where this workflow will not be executed events happened on the specified branches
+    branches-ignore: 
+      - dev 
+    tags-ignore:
+      - "v2.*"
+    paths-ignore:
+      - "**.js"
+
+# Jobs
+jobs:
+  run-shell-command:
+    # Using Ubuntu OS
+    runs-on: ubuntu-latest
+    steps:
+      # First step of the job
+      - name: Checkout Action
+        # This is a public action repo. When this action is used current repo will be cloned into the runner.
+        uses: actions/checkout@v1 #For more public actions checkout  https://github.com/marketplace?type=actions
+      - name: Listing the repo files
+        run: | # | help to write multi line command
+          pwd
+          ls -a
+      - name: Git ENV Variables
+        # GITHUB_SHA - Hash of the last commit with the current repo
+        # GITHUB_REPOSITORY - Current repo url
+        # GITHUB_WORKSPACE - Runner Working Path
+        # github.token - Your git auth token
+        # and more ... Check Docs
+        run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{github.token}}"

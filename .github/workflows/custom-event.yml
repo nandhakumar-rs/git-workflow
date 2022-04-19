@@ -1,0 +1,22 @@
+# Triggering workflow from a custom event via GIT API(It can be triggered from postman, app or from another workflow)
+#
+# Name of the workflow
+name: trigger workflow externally # can be any name
+
+# On which action the workflow to be triggered
+on:
+  repository_dispatch:
+    types: [building] # The type name can be any name, But it should be same when you are try to trigger from an external source.
+
+# Jobs
+jobs: 
+    run-shell-command:
+      # Using Ubuntu OS
+      runs-on: ubuntu-latest
+      steps:
+        # First step of the job
+        - name: Get payload from external trigger 
+          # github object will have all the payload that has been sent from the external trigger
+          run: |
+            echo "*** External Payload ***"
+            echo "${{github.event.workflow_name}}"
